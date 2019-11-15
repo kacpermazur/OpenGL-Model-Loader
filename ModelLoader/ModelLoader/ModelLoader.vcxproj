@@ -158,11 +158,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\libraries\stb_image\stb_imagecpp.cpp" />
     <ClCompile Include="src\ProgramApplication.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\libraries\glm\common.hpp" />
     <ClInclude Include="src\libraries\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\libraries\glm\detail\compute_vector_relational.hpp" />
@@ -408,9 +414,14 @@
     <ClInclude Include="src\libraries\glm\vector_relational.hpp" />
     <ClInclude Include="src\libraries\stb_image\stb_image.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\Shader.h" />
+    <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
+    <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\Default.shader" />
     <None Include="src\libraries\glm\detail\func_common.inl" />
     <None Include="src\libraries\glm\detail\func_common_simd.inl" />
     <None Include="src\libraries\glm\detail\func_exponential.inl" />
