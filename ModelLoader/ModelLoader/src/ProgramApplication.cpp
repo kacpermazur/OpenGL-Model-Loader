@@ -3,6 +3,9 @@
 
 #include <iostream>
 
+//#include "glm/glm.hpp"
+//#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -27,6 +30,7 @@ int main(void)
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
+	
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
