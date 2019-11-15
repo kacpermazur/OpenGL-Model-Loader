@@ -21,6 +21,9 @@
     <ClCompile Include="src\libraries\stb_image\stb_imagecpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -756,6 +759,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\libraries\glm\vector_relational.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

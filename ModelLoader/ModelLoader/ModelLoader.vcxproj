@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="src\libraries\stb_image\stb_imagecpp.cpp" />
     <ClCompile Include="src\ProgramApplication.cpp" />
+    <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\libraries\glm\common.hpp" />
@@ -407,6 +408,7 @@
     <ClInclude Include="src\libraries\glm\vector_relational.hpp" />
     <ClInclude Include="src\libraries\stb_image\stb_image.h" />
     <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\libraries\glm\detail\func_common.inl" />
