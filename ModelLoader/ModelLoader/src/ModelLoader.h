@@ -12,6 +12,7 @@
 struct Model
 {
 	std::vector<unsigned int> vertexIndex, uvIndex, normalIndex;
+	
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
@@ -24,6 +25,12 @@ struct Model
 		Log(uvs);
 		std::cout << "Normals: " << std::endl;
 		Log(normals);
+		std::cout << "VertexIndex" << std::endl;
+		Log(vertexIndex);
+		std::cout << "UV Index" << std::endl;
+		Log(uvIndex);
+		std::cout << "Normal Index" << std::endl;
+		Log(normalIndex);
 	}
 
 private:
@@ -41,6 +48,15 @@ private:
 			std::cout << glm::to_string(vec) << std::endl;
 		}
 	}
+
+	void Log(std::vector<unsigned>& target)
+	{
+		for (unsigned int& i : target)
+		{
+			std::cout << i << " ";
+		}
+		std::cout << std::endl;
+	}
 };
 
 class ModelLoader
@@ -53,7 +69,6 @@ public:
 	
 		std::string currentLine;
 		std::ifstream stream(filePath);
-
 		
 		while(std::getline(stream, currentLine))
 		{
@@ -84,20 +99,11 @@ public:
 			else if (currentLine.length() > 2 && currentLine.substr(0, 2) == "f ")
 			{
 				std::string faceLine = currentLine.substr(2);
-				
-				std::vector<unsigned int> vI, uvI, nI;
-				
-				std::istringstream ss(faceLine);
-				std::string ignore;
 
-				std::cout << "Values Per Line: " << std::endl;
-				std::cout << "isTrangulated: " << IsTriangulated(faceLine) << std::endl;
-				for (int i = 0; i < 4; i++)
-				{
-					ss >> ignore;
-					std::cout << ignore << " ";
-				}
-				std::cout << std::endl;
+				if(IsTriangulated(faceLine))
+					ReadFaces(model, faceLine, 3);
+				else
+					ReadFaces(model, faceLine, 4);
 			}
 			
 		}
@@ -105,16 +111,35 @@ public:
 		return model;
 	}
 private:
-	static bool IsTriangulated(std::string& str)
+	static bool IsTriangulated(std::string& line)
 	{
+		std::istringstream isStream(line);
+		std::string face;
 		int count = 0;
 		
-		std::istringstream isStream(str);
-		std::string test;
-		
-		while(isStream >> test)
+		while(isStream >> face)
 			count += 1;
 
 		return (count == 3)? true : false;
+	}
+
+	static void ReadFaces(Model& model, std::string& line, unsigned int facesPerLine)
+	{
+		std::istringstream ss(line);
+		std::string face;
+		unsigned int value;
+		char avoid;
+		
+		for (unsigned int i = 0; i < facesPerLine; i++)
+		{
+			ss >> face;
+			std::istringstream faceStream(face);
+
+			faceStream >> value; model.vertexIndex.push_back(value);
+			faceStream >> avoid;
+			faceStream >> value; model.uvIndex.push_back(value);
+			faceStream >> avoid;
+			faceStream >> value; model.normalIndex.push_back(value);
+		}
 	}
 };
