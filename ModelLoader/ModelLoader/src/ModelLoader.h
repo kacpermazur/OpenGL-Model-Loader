@@ -83,13 +83,38 @@ public:
 			}
 			else if (currentLine.length() > 2 && currentLine.substr(0, 2) == "f ")
 			{
-				//std::istringstream ss(currentLine.substr(2));
+				std::string faceLine = currentLine.substr(2);
 				
-				//ss >> temp.x; ss >> temp.y; ss >> temp.z;
+				std::vector<unsigned int> vI, uvI, nI;
+				
+				std::istringstream ss(faceLine);
+				std::string ignore;
+
+				std::cout << "Values Per Line: " << std::endl;
+				std::cout << "isTrangulated: " << IsTriangulated(faceLine) << std::endl;
+				for (int i = 0; i < 4; i++)
+				{
+					ss >> ignore;
+					std::cout << ignore << " ";
+				}
+				std::cout << std::endl;
 			}
 			
 		}
 		stream.close();
 		return model;
+	}
+private:
+	static bool IsTriangulated(std::string& str)
+	{
+		int count = 0;
+		
+		std::istringstream isStream(str);
+		std::string test;
+		
+		while(isStream >> test)
+			count += 1;
+
+		return (count == 3)? true : false;
 	}
 };
