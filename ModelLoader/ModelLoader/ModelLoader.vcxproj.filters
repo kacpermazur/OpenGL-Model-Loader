@@ -794,6 +794,9 @@
     <ClInclude Include="src\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ModelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\libraries\glm\detail\func_common.inl">
@@ -1199,5 +1202,10 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="res\shaders\Default.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\chungus.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

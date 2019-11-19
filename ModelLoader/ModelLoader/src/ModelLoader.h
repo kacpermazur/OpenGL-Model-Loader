@@ -83,9 +83,9 @@ public:
 			}
 			else if (currentLine.length() > 2 && currentLine.substr(0, 2) == "f ")
 			{
-				std::istringstream ss(currentLine.substr(2));
+				//std::istringstream ss(currentLine.substr(2));
 				
-				ss >> temp.x; ss >> temp.y; ss >> temp.z;
+				//ss >> temp.x; ss >> temp.y; ss >> temp.z;
 			}
 			
 		}

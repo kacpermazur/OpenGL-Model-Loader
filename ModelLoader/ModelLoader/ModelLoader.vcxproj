@@ -413,6 +413,7 @@
     <ClInclude Include="src\libraries\glm\vec4.hpp" />
     <ClInclude Include="src\libraries\glm\vector_relational.hpp" />
     <ClInclude Include="src\libraries\stb_image\stb_image.h" />
+    <ClInclude Include="src\ModelLoader.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
@@ -556,6 +557,9 @@
     <None Include="src\libraries\glm\gtx\vector_angle.inl" />
     <None Include="src\libraries\glm\gtx\vector_query.inl" />
     <None Include="src\libraries\glm\gtx\wrap.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\chungus.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
