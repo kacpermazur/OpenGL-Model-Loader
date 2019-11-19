@@ -12,17 +12,72 @@
 struct Model
 {
 	std::vector<unsigned int> vertexIndex, uvIndex, normalIndex;
-	
+
 	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs;
+	std::vector<glm::vec2> textCord;
 	std::vector<glm::vec3> normals;
+	
+	std::vector<unsigned int> IV;
+	std::vector<unsigned int> IUV;
+	std::vector<unsigned int> IN;
+
+	std::vector<glm::vec3> GetVerticesIndex()
+	{
+		std::vector<glm::vec3> vIndex;
+
+		for (unsigned int i = 0; i < vertexIndex.size(); i++)
+		{
+			unsigned int index = vertexIndex[i];
+			glm::vec3 item = vertices[index - 1];
+			vIndex.push_back(item);
+		}
+
+		std::cout << "Cord Index: " << std::endl;
+		Log(vIndex);
+
+		return vIndex;
+	}
+
+	std::vector<glm::vec2> GetUVIndex()
+	{
+		std::vector<glm::vec2> vIndex;
+
+		for (unsigned int i = 0; i < uvIndex.size(); i++)
+		{
+			unsigned int index = uvIndex[i];
+			glm::vec2 item = textCord[index - 1];
+			vIndex.push_back(item);
+		}
+
+		std::cout << "Texture Index: " << std::endl;
+		Log(vIndex);
+
+		return vIndex;
+	}
+
+	std::vector<glm::vec3> GetNormalIndex()
+	{
+		std::vector<glm::vec3> vIndex;
+
+		for (unsigned int i = 0; i < normalIndex.size(); i++)
+		{
+			unsigned int index = normalIndex[i];
+			glm::vec3 item = normals[index - 1];
+			vIndex.push_back(item);
+		}
+
+		std::cout << "Normal Index: " << std::endl;
+		Log(vIndex);
+
+		return vIndex;
+	}
 
 	void Print()
 	{
 		std::cout << "Vertices: " << std::endl;
 		Log(vertices);
 		std::cout << "Uvs: " << std::endl;
-		Log(uvs);
+		Log(textCord);
 		std::cout << "Normals: " << std::endl;
 		Log(normals);
 		std::cout << "VertexIndex" << std::endl;
@@ -57,6 +112,7 @@ private:
 		}
 		std::cout << std::endl;
 	}
+
 };
 
 class ModelLoader
@@ -82,7 +138,7 @@ public:
 			{
 				std::istringstream ss(currentLine.substr(3));
 				glm::vec2 temp; ss >> temp.x; ss >> temp.y;
-				model.uvs.push_back(temp);
+				model.textCord.push_back(temp);
 			}
 			else if (currentLine.length() > 3 && currentLine.substr(0, 3) == "vn ")
 			{
@@ -108,6 +164,8 @@ public:
 			
 		}
 		stream.close();
+
+
 		return model;
 	}
 private:
@@ -125,6 +183,8 @@ private:
 
 	static void ReadFaces(Model& model, std::string& line, unsigned int facesPerLine)
 	{
+		std::vector<unsigned int> tempVert, tempNorm;
+		
 		std::istringstream ss(line);
 		std::string face;
 		unsigned int value;
@@ -135,11 +195,62 @@ private:
 			ss >> face;
 			std::istringstream faceStream(face);
 
-			faceStream >> value; model.vertexIndex.push_back(value);
+			faceStream >> value; tempVert.push_back(value);
 			faceStream >> avoid;
 			faceStream >> value; model.uvIndex.push_back(value);
 			faceStream >> avoid;
-			faceStream >> value; model.normalIndex.push_back(value);
+			faceStream >> value; tempNorm.push_back(value);
+		}
+
+		SetVertexIndex(model, tempVert, facesPerLine);
+		SetNormalIndex(model, tempNorm, facesPerLine);
+	}
+
+	static void SetVertexIndex(Model& model, std::vector<unsigned int>& tempVector, unsigned int& count)
+	{
+		if(count == 4)
+		{
+			model.vertexIndex.push_back(tempVector[0]);
+			model.vertexIndex.push_back(tempVector[2]);
+			model.vertexIndex.push_back(tempVector[1]);
+
+			model.vertexIndex.push_back(tempVector[0]);
+			model.vertexIndex.push_back(tempVector[3]);
+			model.vertexIndex.push_back(tempVector[2]);
+		}
+		else if (count == 3)
+		{
+			model.vertexIndex.push_back(tempVector[0]);
+			model.vertexIndex.push_back(tempVector[2]);
+			model.vertexIndex.push_back(tempVector[1]);
+		}
+		else
+		{
+			std::cout << "ERROR: Unable to Set VertexIndex!" << std::endl;
+		}
+	}
+
+	static void SetNormalIndex(Model& model, std::vector<unsigned int>& tempVector, unsigned int& count)
+	{
+		if (count == 4)
+		{
+			model.normalIndex.push_back(tempVector[0]);
+			model.normalIndex.push_back(tempVector[2]);
+			model.normalIndex.push_back(tempVector[1]);
+
+			model.normalIndex.push_back(tempVector[0]);
+			model.normalIndex.push_back(tempVector[3]);
+			model.normalIndex.push_back(tempVector[2]);
+		}
+		else if (count == 3)
+		{
+			model.normalIndex.push_back(tempVector[0]);
+			model.normalIndex.push_back(tempVector[2]);
+			model.normalIndex.push_back(tempVector[1]);
+		}
+		else
+		{
+			std::cout << "ERROR: Unable to Set NormalIndex!" << std::endl;
 		}
 	}
 };

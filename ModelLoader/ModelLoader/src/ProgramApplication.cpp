@@ -39,6 +39,7 @@ int main(void)
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	{
+		/*
 		float positions[] = {
 			-50.0f, -50.0f, 0.0f, 0.0f,
 			 50.0f, -50.0f, 1.0f, 0.0f,
@@ -50,26 +51,35 @@ int main(void)
 			0, 1, 2,
 			2, 3, 0
 		};
+		*/
 
+		Model test = ModelLoader::Load("res/models/Creeper/Creeper.obj");
+		test.Print();
+
+		test.GetVerticesIndex();
+		test.GetUVIndex();
+		test.GetNormalIndex();
+		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		VertexBuffer vertexBuffer(positions, 4 * 4 * sizeof(float));
+		VertexBuffer vertexBuffer(glm::value_ptr(test.vertices), test.vertices.size()* sizeof(test.vertices));
 		
 		VertexBufferLayout layout;
-		layout.Add<float>(2);
-		layout.Add<float>(2);
+		layout.Add<float>(3);
+		//layout.Add<float>(2);
 		
 		VertexArray vertexArray;
 		vertexArray.AddBuffer(vertexBuffer, layout);
 		
-		IndexBuffer indexBuffer(indices, 6);
+		//IndexBuffer indexBuffer(test.GetVerticesIndex().data(), test.GetVerticesIndex().size());
 
 		Shader shader("res/shaders/Default.shader");
 		shader.bind();
 
-		Model test = ModelLoader::Load("res/models/Creeper/Creeper.obj");
-		test.Print();
+		
+		
+		
 		
 
 		//Texture texture("res/textures/chungus.png");
@@ -81,6 +91,7 @@ int main(void)
 		glm::mat4 Projection = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
 		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)); // Camera
 		glm::mat4 Model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0)); // Mesh
+
 		
 		glm::mat4 ModelViewProjection = Projection * View * Model;
 		
