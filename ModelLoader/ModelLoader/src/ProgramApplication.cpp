@@ -13,6 +13,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
+#include "ModelLoader.h"
 
 int main(void)
 {
@@ -38,9 +39,6 @@ int main(void)
 
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	{
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		
 		float positions[] = {
 			-50.0f, -50.0f, 0.0f, 0.0f,
 			 50.0f, -50.0f, 1.0f, 0.0f,
@@ -52,6 +50,10 @@ int main(void)
 			0, 1, 2,
 			2, 3, 0
 		};
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		VertexBuffer vertexBuffer(positions, 4 * 4 * sizeof(float));
 		
 		VertexBufferLayout layout;
@@ -66,8 +68,12 @@ int main(void)
 		Shader shader("res/shaders/Default.shader");
 		shader.bind();
 
-		Texture texture("res/textures/chungus.png");
-		texture.Bind(0);
+		Model test = ModelLoader::Load("res/models/Creeper/Creeper.obj");
+		test.Print();
+		
+
+		//Texture texture("res/textures/chungus.png");
+		//texture.Bind(0);
 		
 		Renderer renderer;
 
@@ -77,6 +83,7 @@ int main(void)
 		glm::mat4 Model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0)); // Mesh
 		
 		glm::mat4 ModelViewProjection = Projection * View * Model;
+		
 		shader.bind();
 		shader.SetUniformMat4f("u_MVP", ModelViewProjection);
 		

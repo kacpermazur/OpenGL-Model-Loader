@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include "stb_image/stb_image.h"
+#include <iostream>
 
 Texture::Texture(const std::string& path)
 	:m_BindID(0), m_filepath(path), m_localBuffer(nullptr), m_width(0), m_hight(0), m_bitsPerPixel(0)
@@ -18,6 +19,8 @@ Texture::Texture(const std::string& path)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_localBuffer);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	std::cout << m_localBuffer << std::endl;
+	
 	if (m_localBuffer)
 	{
 		stbi_image_free(m_localBuffer);
