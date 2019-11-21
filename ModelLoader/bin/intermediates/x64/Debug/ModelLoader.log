@@ -1,17 +1,5 @@
-﻿  IndexBuffer.cpp
-  stb_imagecpp.cpp
-  ProgramApplication.cpp
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(66,104): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,83): error C2664:  'IndexBuffer::IndexBuffer(const IndexBuffer &)': cannot convert argument 1 from 'std::vector<glm::vec3,std::allocator<_Ty>>' to 'const unsigned int *'
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,83): error C2664:         with
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,83): error C2664:         [
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,83): error C2664:             _Ty=glm::vec3
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,83): error C2664:         ]
-  Renderer.cpp
-  Shader.cpp
-  Texture.cpp
-  VertexArray.cpp
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(75,48): message :  No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-  VertexBuffer.cpp
-  Generating Code...
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\VertexArray.cpp(27,135): warning C4312:  'type cast': conversion from 'unsigned int' to 'const void *' of greater size
+﻿  ProgramApplication.cpp
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(74,81): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(82,64): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(107,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  ModelLoader.vcxproj -> C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe

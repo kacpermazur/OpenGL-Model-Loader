@@ -11,8 +11,10 @@
 
 struct Model
 {
-	std::vector<unsigned int> vertexIndex, uvIndex, normalIndex;
+	std::vector<unsigned int> vertexIndex, uvIndex, normalIndex, TESTvertIndex;
 
+	
+	
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> textCord;
 	std::vector<glm::vec3> normals;
@@ -96,6 +98,7 @@ private:
 			std::cout << glm::to_string(vec) << std::endl;
 		}
 	}
+	
 	void Log(std::vector<glm::vec2>& target)
 	{
 		for (glm::vec2& vec : target)
@@ -103,7 +106,7 @@ private:
 			std::cout << glm::to_string(vec) << std::endl;
 		}
 	}
-
+	
 	void Log(std::vector<unsigned>& target)
 	{
 		for (unsigned int& i : target)
@@ -202,6 +205,14 @@ private:
 			faceStream >> value; tempNorm.push_back(value);
 		}
 
+		std::cout << "---------------------------------------------------------------------" << std::endl;
+		std::cout << tempVert[0] << std::endl;
+		std::cout << tempVert[1] << std::endl;
+		std::cout << tempVert[2] << std::endl;
+		std::cout << tempVert[3] << std::endl;
+		
+		std::cout << "---------------------------------------------------------------------" << std::endl;
+		
 		SetVertexIndex(model, tempVert, facesPerLine);
 		SetNormalIndex(model, tempNorm, facesPerLine);
 	}
