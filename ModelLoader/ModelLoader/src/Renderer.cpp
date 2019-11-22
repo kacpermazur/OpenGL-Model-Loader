@@ -9,8 +9,10 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
-void Renderer::TestDraw(unsigned long long& count)
+void Renderer::TestDraw(const VertexBuffer& vb, const Shader& shader, unsigned long long& count)
 {
+	vb.Bind();
+	shader.bind();
 	glDrawArrays(GL_TRIANGLES, 0, count);
 }
 

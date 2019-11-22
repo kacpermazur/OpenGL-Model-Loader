@@ -1,3 +1,5 @@
 ﻿  ProgramApplication.cpp
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(199,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  ModelLoader.vcxproj -> C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(143,81): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(172,64): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(201,23): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+  ModelLoader.vcxproj -> C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe

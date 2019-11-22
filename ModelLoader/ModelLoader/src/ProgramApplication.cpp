@@ -128,9 +128,6 @@ int main(void)
 			30, 31, 32,  // first Triangle back
 			33, 34, 35    // second Triangle
 		};
-
-
-
 		
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -138,9 +135,14 @@ int main(void)
 		Model test = ModelLoader::Load("res/models/Creeper/CreeperT.obj");
 		test.Print();
 
+		auto a = test.GetVerticesIndex();
+		
+		std::cout << test.GetVerticesIndex().size() << std::endl;
+
 		VertexArray va;
-		//VertexBuffer vb(&test.vertices[0].x, sizeof(glm::vec3) * test.vertices.size());
-		VertexBuffer vb(vertices, sizeof(GLfloat)*108);
+		VertexBuffer vb(&test.vertices[0].x, sizeof(glm::vec3) * test.vertices.size());
+		//VertexBuffer vb(vertices, sizeof(GLfloat) * 108);
+		
 		VertexBufferLayout layout;
 		
 		layout.Add<float>(3);
@@ -166,8 +168,8 @@ int main(void)
 		*/
 
 		
-		IndexBuffer ib(indices, 36);
-		//IndexBuffer ib(&test.vertexIndex[0], test.vertexIndex.size());
+		//IndexBuffer ib(indices, 36);
+		IndexBuffer ib(&test.vertexIndex[0], test.vertexIndex.size());
 		//IndexBuffer ib(indices, 6);
 
 		Shader shader("res/shaders/Default.shader");
@@ -194,7 +196,6 @@ int main(void)
 		
 		while (!glfwWindowShouldClose(window))
 		{
-
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			
 			float currentFrame = glfwGetTime();
@@ -203,14 +204,12 @@ int main(void)
 			
 			renderer.Clear();
 
-			
-			Model = glm::rotate(Model, glm::radians(deltaTime*3.0f), glm::vec3(0.0, 1.0f, 0.0f));
+			Model = glm::rotate(Model, glm::radians(deltaTime * 3.0f), glm::vec3(0.0, 1.0f, 0.0f));
 			glm::mat4 ModelViewProjection = Projection * View * Model;
 			shader.bind();
 			shader.SetUniformMat4f("u_MVP", ModelViewProjection);
 			
 			renderer.Draw(va, ib, shader);
-			
 			
 			glfwSwapBuffers(window);
 			glfwPollEvents();
