@@ -12,8 +12,6 @@
 struct Model
 {
 	std::vector<unsigned int> vertexIndex, uvIndex, normalIndex, TESTvertIndex;
-
-	
 	
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> textCord;
@@ -149,12 +147,6 @@ public:
 				glm::vec3 temp; ss >> temp.x; ss >> temp.y; ss >> temp.z;
 				model.normals.push_back(temp);
 			}
-			else if (currentLine.length() > 3 && currentLine.substr(0, 3) == "vn ")
-			{
-				std::istringstream ss(currentLine.substr(3));
-				glm::vec3 temp; ss >> temp.x; ss >> temp.y; ss >> temp.z;
-				model.normals.push_back(temp);
-			}
 			else if (currentLine.length() > 2 && currentLine.substr(0, 2) == "f ")
 			{
 				std::string faceLine = currentLine.substr(2);
@@ -192,6 +184,9 @@ private:
 		std::string face;
 		unsigned int value;
 		char avoid;
+
+		std::cout << "======================================" << std::endl;
+		std::cout << facesPerLine << std::endl;
 		
 		for (unsigned int i = 0; i < facesPerLine; i++)
 		{
@@ -204,7 +199,7 @@ private:
 			faceStream >> avoid;
 			faceStream >> value; tempNorm.push_back(value);
 		}
-
+		/*
 		std::cout << "---------------------------------------------------------------------" << std::endl;
 		std::cout << tempVert[0] << std::endl;
 		std::cout << tempVert[1] << std::endl;
@@ -212,7 +207,7 @@ private:
 		std::cout << tempVert[3] << std::endl;
 		
 		std::cout << "---------------------------------------------------------------------" << std::endl;
-		
+		*/
 		SetVertexIndex(model, tempVert, facesPerLine);
 		SetNormalIndex(model, tempNorm, facesPerLine);
 	}
@@ -232,8 +227,8 @@ private:
 		else if (count == 3)
 		{
 			model.vertexIndex.push_back(tempVector[0]);
-			model.vertexIndex.push_back(tempVector[2]);
 			model.vertexIndex.push_back(tempVector[1]);
+			model.vertexIndex.push_back(tempVector[2]);
 		}
 		else
 		{
