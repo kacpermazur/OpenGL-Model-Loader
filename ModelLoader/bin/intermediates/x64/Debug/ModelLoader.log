@@ -1,5 +1,7 @@
 ﻿  ProgramApplication.cpp
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(143,81): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(172,64): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(201,23): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(52,1): warning C4267:  'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(52,1): warning C4267:  'initializing': conversion from 'size_t' to 'const unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(147,81): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(176,64): warning C4267:  'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(205,23): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
   ModelLoader.vcxproj -> C:\Users\kmazur\Documents\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe

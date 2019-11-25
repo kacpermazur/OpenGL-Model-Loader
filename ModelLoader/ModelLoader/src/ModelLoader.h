@@ -21,6 +21,9 @@ struct Model
 	std::vector<unsigned int> IUV;
 	std::vector<unsigned int> IN;
 
+	std::vector<glm::vec3> uncompressedVertex;
+	std::vector<unsigned int> uncompressedIndices;
+	
 	std::vector<glm::vec3> GetVerticesIndex()
 	{
 		std::vector<glm::vec3> vIndex;
@@ -38,6 +41,67 @@ struct Model
 		return vIndex;
 	}
 
+	unsigned int indcice;
+	unsigned int face = 0;
+	
+	void Uncompress()
+	{
+		glm::vec3 checked[6];
+		std::vector<glm::vec3> data = GetVerticesIndex();
+		
+		const unsigned int vCount = vertices.size();
+
+		checked[0] = data[0];
+		uncompressedVertex.push_back(data[0]);
+		uncompressedIndices.push_back(1);
+		
+		for(unsigned int i = 1; i < data.size(); i++)
+		{
+			if(DupCheck(data[i], checked, face, vCount))
+			{
+				uncompressedIndices.push_back(indcice);
+			}
+			else
+			{
+				uncompressedIndices.push_back(i);
+				uncompressedVertex.push_back(data[i]);
+			}
+
+			int a = i % 6;
+			
+			checked[a] = data[i];
+			std::cout << "========= Checked =========" << " i = " << i << " % = " << (i%6) << std::endl;
+			Log(checked);
+			
+			if (i % 6 == 0)
+				face++;
+			
+		}
+
+		std::cout << "========= Vertices =========" << std::endl;
+		Log(uncompressedVertex);
+		std::cout << "========= Indice =========" << std::endl;
+		Log(uncompressedIndices);
+	}
+
+	bool DupCheck(glm::vec3& target, glm::vec3 src[6], unsigned int& face, const unsigned int offSet = 8)
+	{
+		
+		for(int i = 0; i < 6; i++)
+		{
+			indcice++;
+			if(target == src[i])
+			{
+				indcice = 0;
+				indcice = indcice + (face * offSet);
+				std::cout << "============ " << indcice << std::endl;
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	std::vector<glm::vec2> GetUVIndex()
 	{
 		std::vector<glm::vec2> vIndex;
@@ -114,6 +178,14 @@ private:
 		std::cout << std::endl;
 	}
 
+	void Log(glm::vec3 target[6])
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			std::cout << glm::to_string(target[i]) << std::endl;
+		}
+		std::cout << std::endl;
+	}
 };
 
 class ModelLoader

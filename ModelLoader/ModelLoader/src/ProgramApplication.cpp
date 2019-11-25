@@ -136,8 +136,12 @@ int main(void)
 		test.Print();
 
 		auto a = test.GetVerticesIndex();
+
+		test.Uncompress();
 		
 		std::cout << test.GetVerticesIndex().size() << std::endl;
+		//glm::vec3 value(0.500000, -0.500000, -0.500000);
+		//test.DupCheck(value, a);
 
 		VertexArray va;
 		VertexBuffer vb(&test.vertices[0].x, sizeof(glm::vec3) * test.vertices.size());
