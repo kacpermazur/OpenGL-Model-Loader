@@ -9,5 +9,4 @@ class Renderer
 public:
 	void Clear();
 	void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
-	void TestDraw(const VertexBuffer& vb, const Shader& shader, unsigned long long& count);
 };

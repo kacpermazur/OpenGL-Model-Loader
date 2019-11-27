@@ -13,7 +13,8 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
-#include "ModelLoader.h"
+//#include "ModelLoader.h"
+#include "ModerLoaderRefactor.h"
 
 int main(void)
 {
@@ -132,25 +133,26 @@ int main(void)
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		Model test = ModelLoader::Load("res/models/Creeper/CreeperT.obj");
-		test.Print();
+		//Model test = ModelLoader::Load("res/models/Creeper/Creeper.obj");
+		//test.Print();
 
-		auto a = test.GetVerticesIndex();
-
-		test.Uncompress();
+		std::vector<unsigned int> indices1;
 		
-		std::cout << test.GetVerticesIndex().size() << std::endl;
-		//glm::vec3 value(0.500000, -0.500000, -0.500000);
-		//test.DupCheck(value, a);
+		auto a = MeshLoader::Load("res/models/LowPolyBoat/low_poly_boat.obj", indices1);
+		
+		//auto a = test.GetVerticesIndex();
+		
+		//std::cout << test.GetVerticesIndex().size() << std::endl;
 
 		VertexArray va;
-		VertexBuffer vb(&test.vertices[0].x, sizeof(glm::vec3) * test.vertices.size());
+		VertexBuffer vb(&a[0], sizeof(Vertex) * a.size());
 		//VertexBuffer vb(vertices, sizeof(GLfloat) * 108);
 		
 		VertexBufferLayout layout;
 		
 		layout.Add<float>(3);
-		//layout.Add<float>(2);
+		layout.Add<float>(2);
+		layout.Add<float>(3);
 		va.AddBuffer(vb, layout);
 		
 		/* 
@@ -170,10 +172,9 @@ int main(void)
 			2, 7, 6
 		};
 		*/
-
 		
-		//IndexBuffer ib(indices, 36);
-		IndexBuffer ib(&test.vertexIndex[0], test.vertexIndex.size());
+		IndexBuffer ib(&indices1[0], indices1.size());
+		//IndexBuffer ib(&test.vertexIndex[0], test.vertexIndex.size());
 		//IndexBuffer ib(indices, 6);
 
 		Shader shader("res/shaders/Default.shader");
@@ -188,9 +189,9 @@ int main(void)
 		//glm::mat4 Projection = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, 0.1f, 100.0f);
 		glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
 		
-		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -4.0f)); // Camera
+		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(-5.0f, -3.0f, 0.0f)); // Camera
 		
-		glm::mat4 Model = glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+		glm::mat4 Model = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.1f, 0.1f));
 		//= glm::translate(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f)); // Mesh
 
 		//Model = glm::scale(Model, glm::vec3(2.0f, 2.0f, 2.0f));
