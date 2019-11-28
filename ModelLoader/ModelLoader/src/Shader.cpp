@@ -12,8 +12,8 @@ Shader::Shader(const std::string& filepath)
 	ShaderProgramSoruce soruce = ParseShader(filepath);
 	m_BindID = CreateShader(soruce.VertexSource, soruce.FragmentSource);
 
-	std::cout << soruce.VertexSource << std::endl;
-	std::cout << soruce.FragmentSource << std::endl;
+	//std::cout << soruce.VertexSource << std::endl;
+	//std::cout << soruce.FragmentSource << std::endl;
 }
 
 Shader::~Shader()
