@@ -6,7 +6,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
@@ -25,6 +25,23 @@ struct Material
 
 	std::string diffuseTexture;
 	std::string alphaTexture;
+
+	void View()
+	{
+		std::cout << "===================" << std::endl;
+		std::cout << "Name: " << mtlName << std::endl;
+		std::cout << "Ns: " << shininess << std::endl;
+		std::cout << "Ka: " << glm::to_string(ambientColor) << std::endl;
+		std::cout << "Kd: " << glm::to_string(diffuseColor) << std::endl;
+		std::cout << "Ks: " << glm::to_string(specularColor) << std::endl;
+		std::cout << "Ke: " << glm::to_string(emission) << std::endl;
+		std::cout << "Ni: " << indexOfRefraction << std::endl;
+		std::cout << "d: " << dissolve << std::endl;
+		std::cout << "illum: " << illumination << std::endl;
+		std::cout << "map_Kd" << diffuseTexture << std::endl;
+		std::cout << "map_d" << alphaTexture << std::endl;
+		std::cout << "===================" << std::endl;
+	}
 };
 
 
@@ -43,8 +60,8 @@ struct Vertex
 struct Mesh
 {
 	std::vector<Vertex> vertices;
-	std::vector<Material> materials;
 	std::vector<unsigned int> indices;
+	std::vector<Material> materials;
 };
 
 namespace std {
@@ -87,8 +104,6 @@ public:
 		
 		if(path.find(".obj") != std::string::npos)
 		{
-			std::cout << "REMOVE END:" << std::endl;
-			std::cout << RemoveEnd(path) << std::endl;
 			ParseOBJ(path);
 		}
 		else
@@ -101,12 +116,14 @@ public:
 
 	static std::vector<Material> LoadMaterial(const std::string& path)
 	{
+		
 		std::vector<Material> materials;
 		
-		std::ifstream stream(path);
-		if (!stream)
+		std::ifstream stream(path, std::ifstream::in);
+		if (!stream.good())
 		{
 			std::cout << "MeshLoader ERROR: Path Not Found!" << std::endl;
+			stream.close();
 			return materials;
 		}
 
@@ -180,6 +197,22 @@ public:
 	}
 
 private:
+	static void Log(std::vector<glm::vec3>& target)
+	{
+		for (glm::vec3& vec : target)
+		{
+			std::cout << glm::to_string(vec) << std::endl;
+		}
+	}
+
+	static void Log(std::vector<glm::vec2>& target)
+	{
+		for (glm::vec2& vec : target)
+		{
+			std::cout << glm::to_string(vec) << std::endl;
+		}
+	}
+	
 	static void Log(const std::string& msg)
 	{
 		std::cout << "MeshLoader: " << msg << std::endl;
@@ -205,17 +238,17 @@ private:
 		}
 		return temp;
 	}
-
 	
 	static void ParseOBJ(const std::string& path)
 	{
 		const std::string filePath = RemoveEnd(path);
 		std::string materialName;
 		
-		std::ifstream stream(path);
-		if (!stream)
+		std::ifstream stream(path, std::ifstream::in);
+		if (!stream.good())
 		{
 			std::cout << "MeshLoader ERROR: Path Not Found!" << std::endl;
+			stream.close();
 			return;
 		}
 
@@ -256,8 +289,7 @@ private:
 				else
 					ReadFace(line, 4);
 			}
-		}
-
+		}		
 		if (!materialName.empty())
 			s_mesh.materials = LoadMaterial(std::string(filePath+materialName));
 		
@@ -266,7 +298,9 @@ private:
 		UncompressValues(s_verticesTemp, s_vertexIndicesTemp);
 		UncompressValues(s_normalsTemp, s_normalsIndicesTemp);
 
+		Log("Old Vertices: " + std::to_string(s_verticesTemp.size()));
 		GenerateMeshVertices();
+		Log("New Vertices: " + std::to_string(s_mesh.vertices.size()));
 		std::cout << "MeshLoader: Model Loaded!" << std::endl;
 	}
 
@@ -384,9 +418,6 @@ private:
 		std::vector<Vertex> tempVertices = {};
 		std::vector<unsigned int> tempIndices = {};
 		
-		Log("Temp Indices");
-		Log(tempIndices);
-		
 		for(Vertex& vert : s_mesh.vertices)
 		{
 			if (uniqueVertices.count(vert) == 0)
@@ -405,5 +436,6 @@ private:
 		AddTexCoords(tempVertices);
 		s_mesh.vertices = tempVertices;
 		s_mesh.indices = tempIndices;
+		
 	}
 };
