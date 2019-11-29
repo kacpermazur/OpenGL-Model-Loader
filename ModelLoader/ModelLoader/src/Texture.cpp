@@ -5,6 +5,32 @@
 Texture::Texture(const std::string& path)
 	:m_BindID(0), m_filepath(path), m_localBuffer(nullptr), m_width(0), m_hight(0), m_bitsPerPixel(0)
 {
+	SetTexture(path);
+}
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &m_BindID);
+}
+
+void Texture::SetPath(const std::string& path)
+{
+	SetTexture(path);
+}
+
+void Texture::Bind(unsigned slot)
+{
+	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, m_BindID);
+}
+
+void Texture::Unbind()
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Texture::SetTexture(const std::string& path)
+{
 	stbi_set_flip_vertically_on_load(1);
 	m_localBuffer = stbi_load(path.c_str(), &m_width, &m_hight, &m_bitsPerPixel, 4);
 
@@ -18,25 +44,9 @@ Texture::Texture(const std::string& path)
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_hight, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_localBuffer);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	
+
 	if (m_localBuffer)
 	{
 		stbi_image_free(m_localBuffer);
 	}
-}
-
-Texture::~Texture()
-{
-	glDeleteTextures(1, &m_BindID);
-}
-
-void Texture::Bind(unsigned slot)
-{
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, m_BindID);
-}
-
-void Texture::Unbind()
-{
-	glBindTexture(GL_TEXTURE_2D, 0);
 }

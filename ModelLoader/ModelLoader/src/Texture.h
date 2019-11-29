@@ -13,9 +13,13 @@ public:
 	Texture(const std::string& path);
 	~Texture();
 
+	void SetPath(const std::string& path);
 	void Bind(unsigned int slot = 0);
 	void Unbind();
 
 	int GetWidth() const { return m_width; }
 	int GetHight() const { return m_hight; }
+
+private:
+	void SetTexture(const std::string& path);
 };

@@ -6,9 +6,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "glm/vec3.hpp"
-#include "glm/ext.hpp"
-#include "glm/gtx/string_cast.hpp"
+#include <glm/glm.hpp>
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
@@ -89,11 +87,9 @@ public:
 		
 		if(path.find(".obj") != std::string::npos)
 		{
+			std::cout << "REMOVE END:" << std::endl;
+			std::cout << RemoveEnd(path) << std::endl;
 			ParseOBJ(path);
-		}
-		else if(path.find(".dae") != std::string::npos)
-		{
-			
 		}
 		else
 		{
@@ -122,6 +118,7 @@ public:
 		{
 			if (currentLine.size() > 7 && currentLine.substr(0, 7) == "newmtl ")
 			{
+				std::cout << "MeshLoader: Material Loaded!" << std::endl;
 				index++;
 				materials.push_back({});
 				std::istringstream ss(currentLine.substr(7));
@@ -179,7 +176,6 @@ public:
 			}
 		}
 		stream.close();
-		
 		return materials;
 	}
 
@@ -187,22 +183,6 @@ private:
 	static void Log(const std::string& msg)
 	{
 		std::cout << "MeshLoader: " << msg << std::endl;
-	}
-	
-	static void Log(std::vector<glm::vec3>& target)
-	{
-		for (glm::vec3& vec : target)
-		{
-			std::cout << glm::to_string(vec) << std::endl;
-		}
-	}
-
-	static void Log(std::vector<glm::vec2>& target)
-	{
-		for (glm::vec2& vec : target)
-		{
-			std::cout << glm::to_string(vec) << std::endl;
-		}
 	}
 
 	static void Log(std::vector<unsigned int>& target)
@@ -214,8 +194,24 @@ private:
 		std::cout << std::endl;
 	}
 
+	static std::string RemoveEnd(const std::string& source)
+	{
+		std::string temp;
+		for(unsigned int i = 0; i < source.size(); i++)
+		{
+			char chr = source[source.size() - i];
+			if (chr == '/')
+				return source.substr(0, source.size() - i + 1);
+		}
+		return temp;
+	}
+
+	
 	static void ParseOBJ(const std::string& path)
 	{
+		const std::string filePath = RemoveEnd(path);
+		std::string materialName;
+		
 		std::ifstream stream(path);
 		if (!stream)
 		{
@@ -227,7 +223,13 @@ private:
 
 		while(std::getline(stream, currentLine))
 		{
-			if (currentLine.length() > 2 && currentLine.substr(0,2) == "v ")
+			if (currentLine.length() > 7 && currentLine.substr(0, 7) == "mtllib ")
+			{
+				std::istringstream ss(currentLine.substr(7));
+				ss >> materialName;
+				
+			}
+			else if (currentLine.length() > 2 && currentLine.substr(0,2) == "v ")
 			{
 				std::istringstream ss(currentLine.substr(2));
 				glm::vec3 temp; ss >> temp.x; ss >> temp.y; ss >> temp.z;
@@ -255,12 +257,17 @@ private:
 					ReadFace(line, 4);
 			}
 		}
+
+		if (!materialName.empty())
+			s_mesh.materials = LoadMaterial(std::string(filePath+materialName));
+		
 		stream.close();
 		
 		UncompressValues(s_verticesTemp, s_vertexIndicesTemp);
 		UncompressValues(s_normalsTemp, s_normalsIndicesTemp);
 
 		GenerateMeshVertices();
+		std::cout << "MeshLoader: Model Loaded!" << std::endl;
 	}
 
 	static bool IsTriangulated(const std::string& line)

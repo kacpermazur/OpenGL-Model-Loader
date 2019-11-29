@@ -42,6 +42,8 @@ int main(void)
 
 		glEnable(GL_BLEND);
 		auto mesh = Loader::LoadMesh("res/models/Creeper/Creeper.obj");
+		//mesh.materials = Loader::LoadMaterial("res/models/Creeper/Creeper.mtl");
+		//std::cout << mesh.materials[0].mtlName << std::endl;
 		
 		VertexArray va;
 		VertexBuffer vb(&mesh.vertices[0], sizeof(Mesh) * mesh.vertices.size());
