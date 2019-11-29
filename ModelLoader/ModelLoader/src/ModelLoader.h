@@ -13,6 +13,23 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
+struct Material
+{
+	std::string mtlName;
+	float shininess;
+	glm::vec3 ambientColor;
+	glm::vec3 diffuseColor;
+	glm::vec3 specularColor;
+	glm::vec3 emission;
+	float indexOfRefraction;
+	float dissolve;
+	int illumination;
+
+	std::string diffuseTexture;
+	std::string alphaTexture;
+};
+
+
 struct Vertex
 {
 	glm::vec3 position;
@@ -28,6 +45,7 @@ struct Vertex
 struct Mesh
 {
 	std::vector<Vertex> vertices;
+	std::vector<Material> materials;
 	std::vector<unsigned int> indices;
 };
 
@@ -56,7 +74,7 @@ namespace std {
 	};
 }
 
-class MeshLoader
+class Loader
 {
 	static inline Mesh s_mesh = {};
 
@@ -66,7 +84,7 @@ class MeshLoader
 	static inline std::vector<glm::vec3> s_normalsTemp = {};
 	
 public:
-	static Mesh Load(const std::string& path)
+	static Mesh LoadMesh(const std::string& path)
 	{
 		
 		if(path.find(".obj") != std::string::npos)
@@ -83,6 +101,86 @@ public:
 		}
 
 		return s_mesh;
+	}
+
+	static std::vector<Material> LoadMaterial(const std::string& path)
+	{
+		std::vector<Material> materials;
+		
+		std::ifstream stream(path);
+		if (!stream)
+		{
+			std::cout << "MeshLoader ERROR: Path Not Found!" << std::endl;
+			return materials;
+		}
+
+		std::string currentLine;
+		unsigned int count = 0;
+		int index = -1;
+		
+		while (std::getline(stream, currentLine))
+		{
+			if (currentLine.size() > 7 && currentLine.substr(0, 7) == "newmtl ")
+			{
+				index++;
+				materials.push_back({});
+				std::istringstream ss(currentLine.substr(7));
+				ss >> materials[index].mtlName;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Ns ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].shininess;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Ka ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].ambientColor.x; ss >> materials[index].ambientColor.y; ss >> materials[index].ambientColor.z;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Kd ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].diffuseColor.x; ss >> materials[index].diffuseColor.y; ss >> materials[index].diffuseColor.z;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Ks ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].specularColor.x; ss >> materials[index].specularColor.y; ss >> materials[index].specularColor.z;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Ke ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].emission.x; ss >> materials[index].emission.y; ss >> materials[index].emission.z;
+			}
+			else if (currentLine.size() > 3 && currentLine.substr(0, 3) == "Ni ")
+			{
+				std::istringstream ss(currentLine.substr(3));
+				ss >> materials[index].indexOfRefraction;
+			}
+			else if (currentLine.size() > 2 && currentLine.substr(0, 2) == "d ")
+			{
+				std::istringstream ss(currentLine.substr(2));
+				ss >> materials[index].dissolve;
+			}
+			else if (currentLine.size() > 6 && currentLine.substr(0, 6) == "illum ")
+			{
+				std::istringstream ss(currentLine.substr(6));
+				ss >> materials[index].illumination;
+			}
+			else if (currentLine.size() > 7 && currentLine.substr(0, 7) == "map_Kd ")
+			{
+				std::istringstream ss(currentLine.substr(7));
+				ss >> materials[index].diffuseTexture;
+			}
+			else if (currentLine.size() > 7 && currentLine.substr(0, 6) == "map_d ")
+			{
+				std::istringstream ss(currentLine.substr(6));
+				ss >> materials[index].alphaTexture;
+			}
+		}
+		stream.close();
+		
+		return materials;
 	}
 
 private:
