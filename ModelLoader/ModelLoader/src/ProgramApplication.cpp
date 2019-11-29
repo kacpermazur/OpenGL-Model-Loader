@@ -13,8 +13,7 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
-//#include "ModelLoader.h"
-#include "ModerLoaderRefactor.h"
+#include "ModelLoader.h"
 
 int main(void)
 {
@@ -42,19 +41,10 @@ int main(void)
 	{
 
 		glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		auto mesh = MeshLoader::Load("res/models/Creeper/Creeper.obj");
 		
-
-		//("res/models/Creeper/Creeper.obj"); ("res/models/LowPolyBoat/low_poly_boat.obj"
-
-		std::vector<unsigned int> indices1;
-		
-		auto a = MeshLoader::Load("res/models/Creeper/Creeper.obj", indices1);
-
 		VertexArray va;
-		VertexBuffer vb(&a[0], sizeof(Vertex) * a.size());
-		//VertexBuffer vb(vertices, sizeof(GLfloat) * 108);
-		
+		VertexBuffer vb(&mesh.vertices[0], sizeof(Mesh) * mesh.vertices.size());
 		VertexBufferLayout layout;
 		
 		layout.Add<float>(3);
@@ -62,7 +52,7 @@ int main(void)
 		layout.Add<float>(3);
 		va.AddBuffer(vb, layout);
 	
-		IndexBuffer ib(&indices1[0], indices1.size());
+		IndexBuffer ib(&mesh.indices[0], mesh.indices.size());
 		
 		Shader shader("res/shaders/Default.shader");
 		shader.bind();

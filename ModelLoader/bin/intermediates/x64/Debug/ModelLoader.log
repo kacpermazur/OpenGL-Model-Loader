@@ -1,14 +1,14 @@
 ﻿  ProgramApplication.cpp
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(47,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(48,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(49,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(184,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(185,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(185,1): warning C4267:         with
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(185,1): warning C4267:         [
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(185,1): warning C4267:             _Ty=unsigned int
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModerLoaderRefactor.h(185,1): warning C4267:         ]
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(55,52): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(65,48): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(95,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(51,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(52,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(53,1): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(289,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(291,1): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(291,1): warning C4267:         with
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(291,1): warning C4267:         [
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(291,1): warning C4267:             _Ty=unsigned int
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(291,1): warning C4267:         ]
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(56,74): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(66,56): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(96,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   ModelLoader.vcxproj -> C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe
