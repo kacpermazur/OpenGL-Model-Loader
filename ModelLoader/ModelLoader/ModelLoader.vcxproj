@@ -159,10 +159,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\IndexBuffer.cpp" />
-    <ClCompile Include="src\libraries\imgui\imgui.cpp" />
-    <ClCompile Include="src\libraries\imgui\imgui_demo.cpp" />
-    <ClCompile Include="src\libraries\imgui\imgui_draw.cpp" />
-    <ClCompile Include="src\libraries\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="src\libraries\stb_image\stb_imagecpp.cpp" />
     <ClCompile Include="src\ProgramApplication.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -416,13 +412,6 @@
     <ClInclude Include="src\libraries\glm\vec3.hpp" />
     <ClInclude Include="src\libraries\glm\vec4.hpp" />
     <ClInclude Include="src\libraries\glm\vector_relational.hpp" />
-    <ClInclude Include="src\libraries\imgui\imconfig.h" />
-    <ClInclude Include="src\libraries\imgui\imgui.h" />
-    <ClInclude Include="src\libraries\imgui\imgui_impl_glfw_gl3.h" />
-    <ClInclude Include="src\libraries\imgui\imgui_internal.h" />
-    <ClInclude Include="src\libraries\imgui\stb_rect_pack.h" />
-    <ClInclude Include="src\libraries\imgui\stb_textedit.h" />
-    <ClInclude Include="src\libraries\imgui\stb_truetype.h" />
     <ClInclude Include="src\libraries\stb_image\stb_image.h" />
     <ClInclude Include="src\ModelLoader.h" />
     <ClInclude Include="src\Renderer.h" />

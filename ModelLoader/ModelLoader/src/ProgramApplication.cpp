@@ -15,15 +15,16 @@
 #include "Texture.h"
 #include "ModelLoader.h"
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw_gl3.h"
-
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+unsigned int strIndex = 0;
+
+Mesh mesh;
 bool Clear = false;
+bool PolygonMode = false;
 
 void Unbind(VertexArray& va, VertexBuffer& vb, IndexBuffer& ib, Shader& shader, Texture& texture)
 {
@@ -55,16 +56,22 @@ int main(void)
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
+
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error: GLEW didnt initilize" << std::endl;
 	
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	{
 		
+		std::vector<std::string> filepaths;
+		filepaths.push_back("res/models/Creeper/Creeper.obj");
+		filepaths.push_back("res/models/LowPolyBoat/low_poly_boat.obj");
+		filepaths.push_back("res/models/Pouf-obj/pouf.obj");
+
 		glEnable(GL_BLEND);
-		//auto mesh = Loader::LoadMesh("res/models/LowPolyBoat/low_poly_boat.obj");
-		auto mesh = Loader::LoadMesh("res/models/Creeper/Creeper.obj");
-		//mesh.materials[0].View();
+		//auto mesh = Loader::LoadMesh("res/models/LowPolyBoat/low_poly_boat.obj");res/models/Creeper/Creeper.obj res/models/Pouf-obj/pouf.obj
+		mesh = Loader::LoadMesh(filepaths[0]);
+		mesh.materials[0].View();
 
 		VertexArray va;
 		VertexBuffer vb(&mesh.vertices[0], sizeof(Vertex) * mesh.vertices.size());
@@ -87,10 +94,6 @@ int main(void)
 		
 		Renderer renderer;
 
-		ImGui::CreateContext();
-		ImGui_ImplGlfwGL3_Init(window, true);
-		ImGui::StyleColorsDark();
-
 		//ToDO: Move This Out to Mesh/Gameobject and Camera
 		glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
 
@@ -101,10 +104,37 @@ int main(void)
 
 		glm::vec3 translateA(0.0f, 0.0f, -4.0f);
 		glm::vec3 rot(0.0f, 1.0f, 0.0f);
+
+		glm::vec3 translateC(1.0f, 0.0f, 0.0f);
+		glm::vec3 translateD(-1.0f, 0.0f, 0.0f);
 		
+		int lastIndex = strIndex;
+
 		while (!glfwWindowShouldClose(window))
 		{
-			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			if (strIndex != lastIndex)
+			{
+				mesh = Loader::LoadMesh(filepaths[strIndex]);
+
+				VertexArray va2;
+				va.Unbind();
+				vb.Unbind();
+				ib.Unbind();
+
+				VertexBuffer vb2(&mesh.vertices[0], sizeof(Vertex) * mesh.vertices.size());
+				VertexBufferLayout layout2;
+
+				layout2.Add<float>(3);
+				layout2.Add<float>(2);
+				layout2.Add<float>(3);
+				va2.AddBuffer(vb2, layout2);
+				IndexBuffer ib2(&mesh.indices[0], mesh.indices.size());
+
+				renderer.Draw(va2, ib2, shader);
+
+				lastIndex = strIndex;
+			}
+
 			glFrontFace(GL_CW);
 			glCullFace(GL_FRONT);
 			glEnable(GL_CULL_FACE);
@@ -114,7 +144,6 @@ int main(void)
 			lastFrame = currentFrame;
 
 			renderer.Clear();
-			ImGui_ImplGlfwGL3_NewFrame();
 
 			shader.bind();
 			
@@ -124,29 +153,28 @@ int main(void)
 
 			
 			Model = glm::rotate(Model, glm::radians(deltaTime * 15.0f), rot);
-
-				glm::mat4 ModelViewProjection = Projection * View * Model;
-				shader.SetUniformMat4f("u_MVP", ModelViewProjection);
 			
-			
-			
+			glm::mat4 ModelViewProjection = Projection * View * Model;
+			shader.SetUniformMat4f("u_MVP", ModelViewProjection);
 			renderer.Draw(va, ib, shader);
-
-			{
-				ImGui::SliderFloat3("Camera", &translateA.x, -5.0f, 5.0f);
-				ImGui::SliderFloat3("Rotation", &rot.x, -1.0f, 2.0f);
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			}
 			
-
+			
 			if (Clear == true)
 			{
 				Unbind(va, vb, ib, shader, texture);
 				Clear = false;
 			}
 
-			ImGui::Render();
-			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+			if (PolygonMode == true)
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			}
+
+			if (PolygonMode == false)
+			{
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
 			
 			glfwSwapBuffers(window);
 			glfwPollEvents();
@@ -154,8 +182,6 @@ int main(void)
 		
 	}
 
-	ImGui_ImplGlfwGL3_Shutdown();
-	ImGui::DestroyContext();
 	glfwTerminate();
 	return 0;
 }
@@ -166,10 +192,24 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	{
 		glfwSetWindowShouldClose(window, true);
 	}
-	else if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+	else if (key == GLFW_KEY_0 && action == GLFW_PRESS)
 	{
 		std::cout << "CLEARING MODELS" << std::endl;
 		Clear = true;
-		
+	}
+	else if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+	{
+		std::cout << "PolygonMode" << std::endl;
+		PolygonMode = true;
+	}
+	else if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+	{
+		std::cout << "PolygonMode" << std::endl;
+		PolygonMode = false;
+	}
+	else if (key == GLFW_KEY_3 && action == GLFW_PRESS)
+	{
+		std::cout << "Model Change" << std::endl;
+		strIndex++;
 	}
 }
