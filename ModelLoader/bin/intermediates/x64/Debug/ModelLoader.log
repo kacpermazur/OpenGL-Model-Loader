@@ -8,7 +8,7 @@ C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\
 C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(427,1): warning C4267:         [
 C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(427,1): warning C4267:             _Ty=unsigned int
 C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ModelLoader.h(427,1): warning C4267:         ]
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(67,76): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(74,56): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
-C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(105,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(70,76): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(77,56): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\ModelLoader\src\ProgramApplication.cpp(112,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   ModelLoader.vcxproj -> C:\Users\kacper\Documents\GitKraken\OpenGL-Model-Loader\ModelLoader\bin\x64\Debug\ModelLoader.exe

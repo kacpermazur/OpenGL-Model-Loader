@@ -15,6 +15,9 @@
 #include "Texture.h"
 #include "ModelLoader.h"
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw_gl3.h"
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 float deltaTime = 0.0f;
@@ -60,7 +63,7 @@ int main(void)
 		
 		glEnable(GL_BLEND);
 		//auto mesh = Loader::LoadMesh("res/models/LowPolyBoat/low_poly_boat.obj");
-		auto mesh = Loader::LoadMesh("res/models/LowPolyBoat/low_poly_boat.obj");
+		auto mesh = Loader::LoadMesh("res/models/Creeper/Creeper.obj");
 		//mesh.materials[0].View();
 
 		VertexArray va;
@@ -84,16 +87,20 @@ int main(void)
 		
 		Renderer renderer;
 
+		ImGui::CreateContext();
+		ImGui_ImplGlfwGL3_Init(window, true);
+		ImGui::StyleColorsDark();
+
 		//ToDO: Move This Out to Mesh/Gameobject and Camera
 		glm::mat4 Projection = glm::perspective(45.0f, 4.0f / 3, 0.1f, 20.0f);
 
-		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 5.0f, -4.0f)); // Camera
+		glm::mat4 View = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -4.0f)); // Camera
 
 		glm::mat4 Model = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 		
 
-		glm::vec3 translateA(1.0f, 0.0f, 0.0f);
-		glm::vec3 translateB(-1.0f, 0.0f, 0.0f);
+		glm::vec3 translateA(0.0f, 0.0f, -4.0f);
+		glm::vec3 rot(0.0f, 1.0f, 0.0f);
 		
 		while (!glfwWindowShouldClose(window))
 		{
@@ -107,28 +114,48 @@ int main(void)
 			lastFrame = currentFrame;
 
 			renderer.Clear();
-
+			ImGui_ImplGlfwGL3_NewFrame();
 
 			shader.bind();
 			
 			//glm::mat4 Model = glm::translate(glm::mat4(1.0f), translateA);
-			Model = glm::rotate(Model, glm::radians(deltaTime * 10.0f), glm::vec3(0.0, 1.0f, 0.0f));
-			glm::mat4 ModelViewProjection = Projection * View * Model;
-			shader.SetUniformMat4f("u_MVP", ModelViewProjection);
+			View = glm::translate(glm::mat4(1.0f), translateA);
+
+
+			
+			Model = glm::rotate(Model, glm::radians(deltaTime * 15.0f), rot);
+
+				glm::mat4 ModelViewProjection = Projection * View * Model;
+				shader.SetUniformMat4f("u_MVP", ModelViewProjection);
+			
+			
+			
 			renderer.Draw(va, ib, shader);
-		
+
+			{
+				ImGui::SliderFloat3("Camera", &translateA.x, -5.0f, 5.0f);
+				ImGui::SliderFloat3("Rotation", &rot.x, -1.0f, 2.0f);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			}
+			
 
 			if (Clear == true)
 			{
 				Unbind(va, vb, ib, shader, texture);
 				Clear = false;
 			}
+
+			ImGui::Render();
+			ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 			
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
 		
 	}
+
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
 	glfwTerminate();
 	return 0;
 }
